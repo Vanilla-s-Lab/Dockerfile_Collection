@@ -19,5 +19,9 @@ RUN apt install flex libbison-dev libboost-dev libboost-filesystem-dev libboost-
     && cd build && cmake ../ -DBUILD_JAVASCRIPT=OFF -DBUILD_NODEJS=OFF \
     && make -j $(nproc) && make install
 
+RUN apt install wget && wget https://github.com/lz4/lz4/archive/refs/tags/v1.9.4.tar.gz \
+    && tar -xf v1.9.4.tar.gz && cd lz4-1.9.4/build/cmake && mkdir build && cd build \
+    && cmake ../ && make -j $(nproc) && make install
+
 COPY ./CMakeLists.txt /root/CMakeLists.txt
 RUN mkdir build && cd build && cmake ../
