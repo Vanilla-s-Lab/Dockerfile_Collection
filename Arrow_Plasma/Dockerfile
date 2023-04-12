@@ -11,5 +11,13 @@ RUN apt install sudo lsb-release wget -y && /root/arrow_install.sh
 RUN apt install cmake g++ -y
 
 WORKDIR /root
+
+RUN apt install dpkg-dev -y
+
+RUN apt install flex libbison-dev libboost-dev libboost-filesystem-dev libboost-thread-dev libboost-test-dev -y \
+    && mkdir libthrift-dev && apt-get source libthrift-dev && cd thrift-* \
+    && cd build && cmake ../ -DBUILD_JAVASCRIPT=OFF -DBUILD_NODEJS=OFF \
+    && make -j $(nproc) && make install
+
 COPY ./CMakeLists.txt /root/CMakeLists.txt
 RUN mkdir build && cd build && cmake ../
