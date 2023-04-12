@@ -15,7 +15,7 @@ WORKDIR /root
 RUN apt install dpkg-dev -y
 
 RUN apt install flex libbison-dev libboost-dev libboost-filesystem-dev libboost-thread-dev libboost-test-dev -y \
-    && mkdir libthrift-dev && apt-get source libthrift-dev && cd thrift-* \
+    && mkdir libthrift-dev && cd libthrift-dev && apt-get source libthrift-dev && cd thrift-* \
     && cd build && cmake ../ -DBUILD_JAVASCRIPT=OFF -DBUILD_NODEJS=OFF \
     && make -j $(nproc) && make install
 
