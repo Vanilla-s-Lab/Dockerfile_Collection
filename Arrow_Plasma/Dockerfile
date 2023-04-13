@@ -37,5 +37,8 @@ RUN mkdir libre2-dev && cd libre2-dev && apt-get source libre2-dev && cd re2-* \
 RUN mkdir libc-ares-dev && cd libc-ares-dev && apt-get source libc-ares-dev && cd c-ares-* \
     && mkdir build && cd build && cmake ../ && make -j $(nproc) && make install
 
+RUN apt install nvidia-cuda-toolkit -y
+RUN apt install plasma-store-server -y
+
 COPY ./CMakeLists.txt /root/CMakeLists.txt
 RUN mkdir build && cd build && cmake ../
