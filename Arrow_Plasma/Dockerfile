@@ -23,5 +23,9 @@ RUN apt install wget && wget https://github.com/lz4/lz4/archive/refs/tags/v1.9.4
     && tar -xf v1.9.4.tar.gz && cd lz4-1.9.4/build/cmake && mkdir build && cd build \
     && cmake ../ && make -j $(nproc) && make install
 
+RUN wget https://github.com/facebook/zstd/releases/download/v1.4.8/zstd-1.4.8.tar.gz \
+    && tar -xf zstd-1.4.8.tar.gz && cd zstd-1.4.8/build/cmake && mkdir build && cd build \
+    && cmake ../ && make -j $(nproc) && make install
+
 COPY ./CMakeLists.txt /root/CMakeLists.txt
 RUN mkdir build && cd build && cmake ../
