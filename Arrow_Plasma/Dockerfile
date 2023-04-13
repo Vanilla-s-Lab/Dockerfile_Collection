@@ -34,5 +34,8 @@ RUN mkdir libre2-dev && cd libre2-dev && apt-get source libre2-dev && cd re2-* \
     && ../re2/make_unicode_groups.py > ../re2/unicode_groups.cc \
     && cmake ../ && make -j $(nproc) && make install
 
+RUN mkdir libc-ares-dev && cd libc-ares-dev && apt-get source libc-ares-dev && cd c-ares-* \
+    && mkdir build && cd build && cmake ../ && make -j $(nproc) && make install
+
 COPY ./CMakeLists.txt /root/CMakeLists.txt
 RUN mkdir build && cd build && cmake ../
