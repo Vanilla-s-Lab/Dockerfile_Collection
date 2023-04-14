@@ -13,18 +13,26 @@ jobs:
       - uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v2
 
+      # https://docs.docker.com/build/ci/github-actions/push-multi-registries/
+
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: docker/build-push-action@v4
         with:
           push: true
 
-          # https://docs.docker.com/build/ci/github-actions/push-multi-registries/
-          tags: ghcr.io/vanilla-s-lab/arrow_plasma:v0.0.1
+          tags: |
+            vergedx/arrow_plasma:v0.0.1
+            ghcr.io/vanilla-s-lab/arrow_plasma:v0.0.1
 
           # https://github.com/marketplace/actions/build-and-push-docker-images#customizing
           file: ./Arrow_Plasma/Dockerfile
