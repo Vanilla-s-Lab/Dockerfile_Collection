@@ -1,0 +1,47 @@
+---
+name: syncplay-server
+
+"on":
+  push:
+    paths:
+      - syncplay-server/**
+
+jobs:
+  nix:
+    runs-on: ubuntu-latest
+
+    # https://stackoverflow.com/questions/58139175/running-actions-in-another-directory
+    defaults:
+      run:
+        working-directory: ./syncplay-server
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+
+      - run: nix flake update
+      - run: nix build .#syncplay-server -v -L
+
+      - run: docker load < result
+
+      - run: |
+          docker tag syncplay-server:v0.0.1 \
+          vergedx/syncplay-server:v0.0.1
+
+      - run: |
+          docker tag syncplay-server:v0.0.1 \
+          ghcr.io/vanilla-s-lab/syncplay-server:v0.0.1
+
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: docker push vergedx/syncplay-server:v0.0.1
+      - run: docker push ghcr.io/vanilla-s-lab/syncplay-server:v0.0.1
