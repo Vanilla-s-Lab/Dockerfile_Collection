@@ -2,9 +2,7 @@
 name: bilibili-live-tools
 
 "on":
-  push:
-    branches:
-      - 'master'
+  workflow_dispatch:
 
 jobs:
   docker:
