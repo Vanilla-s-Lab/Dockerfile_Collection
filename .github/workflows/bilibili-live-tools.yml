@@ -1,6 +1,7 @@
+---
 name: bilibili-live-tools
 
-on:
+"on":
   push:
     branches:
       - 'master'

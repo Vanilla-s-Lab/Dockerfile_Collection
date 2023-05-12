@@ -1,6 +1,7 @@
+---
 name: arrow_plasma
 
-on:
+"on":
   push:
     branches:
       - 'master'
